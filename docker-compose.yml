@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    env_file: docker/dev.env
+
+  web:
+    command: /home/wait-for-it.sh db:5432 -- ./docker/start.sh
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file: docker/dev.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    depends_on:
+      - db
