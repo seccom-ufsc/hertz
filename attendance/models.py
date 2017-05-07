@@ -16,7 +16,8 @@ class Lecture(models.Model):
     time = models.TimeField()
     duration = models.DurationField()
 
-    attendant = models.ManyToManyField(Student, related_name='lectures')
+    attendant = models.ManyToManyField(
+        Student, related_name='lectures', blank=True)
 
     def __str__(self):
         return '<{}: id={}, title={}>'.format(
