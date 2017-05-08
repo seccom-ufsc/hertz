@@ -19,3 +19,10 @@ services:
       - .:/code
     depends_on:
       - db
+
+  nginx:
+    build: docker/nginx/
+    ports:
+      - "80:80"
+    depends_on:
+      - web
