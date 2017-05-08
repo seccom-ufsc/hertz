@@ -1,4 +1,5 @@
 migrations/
+db.sqlite3
 
 #### python ####
 # Byte-compiled / optimized / DLL files
