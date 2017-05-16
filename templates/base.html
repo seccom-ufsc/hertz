@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hertz</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.min.css">
+        <script src="https://use.fontawesome.com/c8f8c715ae.js"></script>
+        <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+    </head>
+
+    <body class"layout-default">
+        <section class="hero is-large has-text-centered box">
+            <h1 class="title is-1"><a href="{% url 'root' %}">Hertz</a></h1>
+
+            <div class="header-element">
+            {% if user.is_authenticated %}
+                <h1><a href="{% url 'logout' %}">Logout</a></h1>
+            {% else %}
+                <h1><a href="{% url 'login' %}">Login</a></h1>
+            {% endif %}
+            </div>
+
+        </section>
+
+
+        <section class="container">
+            {% block content %}
+            {% endblock %}
+        </section>
+
+    <!--<footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                    is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC ANS 4.0</a>.
+                </p>
+                <p>
+                    <a class="icon" href="https://github.com/jgthms/bulma">
+                    <i class="fa fa-github"></i>
+                </a>
+                </p>
+            </div>
+        </div>
+    </footer>-->
+    </body>
+</html>

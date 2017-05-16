@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Attendance</title>
-    </head>
+{% extends 'base.html' %}
 
-    <body>
-        <div>
-            Hello, world!
-        </div>
-    </body>
-</html>
+{% block content %}
+    {% for lecture in lectures %}
+    <div class="box">
+        <a href="{% url 'lecture' lecture.id %}">
+            <strong class="is-large">{{ lecture.title }}</strong>
+        </a>
+
+        <small>{{ lecture.date }} {{ lecture.time }}</small>
+        <br>
+        <small>{{ lecture.lecturer }}</small>
+    </div>
+    {% endfor %}
+{% endblock %}

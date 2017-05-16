@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="box">
+        <div>Title: <strong>{{ lecture.title }}</strong></div>
+        <div>Time: <strong>{{ lecture.time }}</strong></div>
+        <div>Date: <strong>{{ lecture.date }}</strong></div>
+        <div>Lecturer: <strong>{{ lecture.lecturer }}</strong></div>
+
+    </div>
+
+    {% if students|length %}
+    <div class="box">
+        <div><strong>Students:</strong></div>
+
+        {% for student in students %}
+            <div>{{ student.name }}</div>
+        {% endfor %}
+
+        <div class="icon">
+            <i class="fa fa-plus"></i>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
