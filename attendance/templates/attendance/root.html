@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for lecture in lectures %}
+    {% for lecture in object_list %}
     <div class="box">
         <a href="{% url 'lecture' lecture.id %}">
             <strong class="is-large">{{ lecture.title }}</strong>

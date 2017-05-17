@@ -1,15 +1,16 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
 from django.forms import ValidationError
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic.list import ListView
 
 from .forms import RegisterAttendanceForm
 from .models import Lecture, Student
 
 
-def root(request):
-    lectures = Lecture.objects.all()
-
-    return render(request, 'attendance/root.html', {'lectures': lectures})
+class LecturesListView(ListView):
+    model = Lecture
+    queryset = Lecture.objects.all()
+    template_name = 'attendance/root.html'
 
 
 @login_required

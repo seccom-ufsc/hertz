@@ -4,7 +4,7 @@ from .views import *
 
 
 urlpatterns = [
-    url(r'^$', root, name='root'),
+    url(r'^$', LecturesListView.as_view(), name='root'),
 
     url(r'lecture/(\d+)', lecture, name='lecture'),
 ]
