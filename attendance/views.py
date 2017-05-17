@@ -1,8 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic.base import View
+from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
+
+from django.urls import reverse
 
 from .forms import RegisterAttendanceForm
 from .models import Lecture, Student
@@ -22,52 +26,47 @@ class LectureDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = {
-            'students': self.object.attendants.all()
+            'students': self.object.attendants.all(),
+            'form': RegisterAttendanceForm(),
         }
 
         return super().get_context_data(**context)
 
-# class RegisterAttendanceView(FormView):
-#     pass
 
-# @login_required
-# def lecture(request, lecture_id):
-#     lecture = get_object_or_404(Lecture, pk=lecture_id)
+class RegisterAttendance(SingleObjectMixin, FormView):
+    template_name = 'attendance/lecture.html'
+    form_class = RegisterAttendanceForm
+    model = Lecture
 
-#     print(request.POST)
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
 
-#     if request.method == 'POST':
-#         form = RegisterAttendanceForm(request.POST)
+        self.object = self.get_object()
 
-#         if form.is_valid():
-#             student_id = form.cleaned_data.get('student_id')
+        return super().post(request, *args, **kwargs)
 
-#             # try:
-#             #     student = Student.objects.get(pk=int(student_id))
-#             # except ValueError:
+    def get_success_url(self):
+        return reverse('lecture', kwargs={'pk': self.object.pk})
 
-#             try:
-#                 student = Student.objects.get(pk=student_id)
-#             except Student.DoesNotExist:
-#                 form.add_error(
-#                     'student_id',
-#                     ValidationError(
-#                         'Student not found',
-#                         code='student_not_found',
-#                     )
-#                 )
+    def form_valid(self, form):
+        student_id = form.cleaned_data['student_id']
 
-#             # return redirect('lecture', lecture_id)
+        try:
+            student = Student.objects.get(pk=student_id)
+        except Student.DoesNotExist:
+            return redirect('lecture', self.object.id)
 
-    # else:
-    #     form = RegisterAttendanceForm()
+        self.object.attendants.add(student)
 
-    #     students = lecture.attendants.all()
+        return super().form_valid(form)
 
-    #     context = {
-    #         'lecture': lecture,
-    #         'students': students,
-    #         'form': form,
-    #     }
 
-    #     return render(request, 'attendance/lecture.html', context)
+class LectureDetail(View):
+    def get(self, request, *args, **kwargs):
+        view = LectureDetailView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = RegisterAttendance.as_view()
+        return view(request, *args, **kwargs)

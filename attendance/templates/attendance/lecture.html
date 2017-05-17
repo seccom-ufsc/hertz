@@ -13,9 +13,7 @@
         <form method="post">
             {% csrf_token %}
 
-            {{ form.as_p }}
-
-            <!--{% if form.errors %}
+            {% if form.errors %}
                 <p style="color: red">Erro!</p>
             {% endif %}
 
@@ -25,15 +23,16 @@
                     <div>{{ error }}</div>
                 {% endfor %}
 
-                <div>
-                    {{ field.label_tag }}
+                <p class="control">
                     {{ field }}
-                </div>
-            {% endfor %}-->
+                </p>
+            {% endfor %}
 
-            <div>
-                <input type="submit" value="Submit" />
-            </div>
+            <br>
+
+            <p class="control">
+                <input class="button is-primary" type="submit" value="Submit" />
+            </p>
         </form>
     </div>
 
