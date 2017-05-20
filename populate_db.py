@@ -11,11 +11,10 @@ from django.contrib.auth.models import User
 from attendance.models import Lecture, Student
 from datetime import date, time, timedelta
 
-# User.objects.create_superuser('admin', '', 'adminadmin')
+User.objects.create_superuser('admin', '', 'adminadmin')
 
 lectures = [
     {
-        'id': 1,
         'title': 'Big data ou Big Brother',
         'lecturer': 'Castlevânia',
         'date': date(2016, 10, 5),
@@ -23,7 +22,6 @@ lectures = [
         'duration': timedelta(seconds=45 * 60),
     },
     {
-        'id': 2,
         'title': 'Foca Robô',
         'lecturer': 'Professor 1',
         'date': date(2016, 10, 5),
@@ -31,7 +29,6 @@ lectures = [
         'duration': timedelta(seconds=60 * 60),
     },
     {
-        'id': 3,
         'title': 'A Terra é Plana',
         'lecturer': 'Professor 2',
         'date': date(2016, 10, 6),
@@ -43,15 +40,12 @@ lectures = [
 
 students = [
     {
-        'id': 1,
         'name': 'Student 1'
     },
     {
-        'id': 2,
         'name': 'Student 2'
     },
     {
-        'id': 3,
         'name': 'Student 3'
     },
 

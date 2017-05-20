@@ -10,8 +10,6 @@ urlpatterns = [
     url(r'^login/?$', auth_views.login, dict(template_name='login.html'),
         name='login'),
 
-    url(r'^register/', views.register, name='register'),
-
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
 
     url(r'', include('attendance.urls')),

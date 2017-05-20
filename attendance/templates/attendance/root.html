@@ -4,12 +4,31 @@
     {% for lecture in object_list %}
     <div class="box">
         <a href="{% url 'lecture' lecture.id %}">
-            <strong class="is-large">{{ lecture.title }}</strong>
+            <strong>{{ lecture.title }}</strong>
         </a>
 
-        <small>{{ lecture.date }} {{ lecture.time }}</small>
+        <small>
+            {{ lecture.date }} <strong>||</strong>
+            {{ lecture.time }} <strong>||</strong>
+            {{ lecture.duration }}
+        </small>
+
         <br>
+
         <small>{{ lecture.lecturer }}</small>
+
     </div>
     {% endfor %}
+
+    <div class="box">
+        <p class="control">
+            <a class="button is-primary" href="{% url 'lecture_create' %}">
+                <span class="icon is-small">
+                    <i class="fa fa-plus"></i>
+                </span>
+
+                <span>New Lecture</span>
+            </a>
+        </p>
+    </div>
 {% endblock %}

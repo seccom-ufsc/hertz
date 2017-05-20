@@ -1,24 +1,25 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import ValidationError
+from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import FormView
+from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
-from django.urls import reverse
-
-from .forms import RegisterAttendanceForm
+from .forms import LectureForm, RegisterAttendanceForm
 from .models import Lecture, Student
 
 
-class LecturesListView(ListView):
+class LecturesList(ListView):
     model = Lecture
     queryset = Lecture.objects.all()
     template_name = 'attendance/root.html'
 
 
-class LectureDetailView(DetailView):
+class LectureDetail(DetailView):
     model = Lecture
     slug_field = 'pk'
     context_object_name = 'lecture'
@@ -33,7 +34,7 @@ class LectureDetailView(DetailView):
         return super().get_context_data(**context)
 
 
-class RegisterAttendance(SingleObjectMixin, FormView):
+class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
     template_name = 'attendance/lecture.html'
     form_class = RegisterAttendanceForm
     model = Lecture
@@ -62,11 +63,37 @@ class RegisterAttendance(SingleObjectMixin, FormView):
         return super().form_valid(form)
 
 
-class LectureDetail(View):
+class LectureDetailMux(View):
     def get(self, request, *args, **kwargs):
-        view = LectureDetailView.as_view()
+        view = LectureDetail.as_view()
         return view(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         view = RegisterAttendance.as_view()
         return view(request, *args, **kwargs)
+
+
+class LectureCreate(LoginRequiredMixin, CreateView):
+    model = Lecture
+
+    form_class = LectureForm
+
+    success_url = reverse_lazy('root')
+
+
+class LectureUpdate(LoginRequiredMixin, UpdateView):
+    model = Lecture
+
+    form_class = LectureForm
+
+    slug_field = 'pk'
+
+    success_url = reverse_lazy('root')
+
+
+class LectureDelete(LoginRequiredMixin, DeleteView):
+    model = Lecture
+
+    slug_field = 'pk'
+
+    success_url = reverse_lazy('root')

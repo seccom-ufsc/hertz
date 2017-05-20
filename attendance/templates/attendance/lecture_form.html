@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="box">
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div style="color: red">{{ error }}</div>
+                {% endfor %}
+
+                <p class="control">
+                    {{ field }}
+                </p>
+
+                <br>
+            {% endfor %}
+
+            <p class="control">
+                <input class="button is-primary" type="submit" value="Submit" />
+
+                {% if object %}
+                    <a href="{% url 'lecture' object.id %}" class="button">Cancel</a>
+                {% else %}
+                    <a href="{% url 'root' %}" class="button">Cancel</a>
+                {% endif %}
+            </p>
+        </form>
+    </div>
+{% endblock %}

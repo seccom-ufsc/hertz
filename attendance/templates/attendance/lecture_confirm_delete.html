@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="box">
+        <form action="" method="post">{% csrf_token %}
+            <p>Are you sure you want to delete "<strong>{{ object.title }}</strong>"?</p>
+
+            <br>
+
+            <p class="control">
+                <input type="submit" class="button is-danger" value="Delete" />
+
+                <a href="{% url 'lecture' object.id %}" class="button">Cancel</a>
+            </p>
+        </form>
+    </div>
+{% endblock %}
