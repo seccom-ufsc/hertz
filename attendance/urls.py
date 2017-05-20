@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib import admin
-from .views import *
 
+from .views import *
 
 urlpatterns = [
     url(r'^$', LecturesList.as_view(), name='root'),

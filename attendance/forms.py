@@ -52,4 +52,3 @@ class LectureForm(ModelForm):
                 'placeholder': 'Duration',
             }),
         }
-
