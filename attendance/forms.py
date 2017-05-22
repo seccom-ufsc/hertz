@@ -38,17 +38,17 @@ class LectureForm(ModelForm):
 
             'date': DateInput(attrs={
                 'class': 'input is-primary',
-                'placeholder': 'Date',
+                'placeholder': 'Date (mm/dd/yyyy)',
                 'type': 'date',
             }),
 
             'time': TimeInput(attrs={
                 'class': 'input is-primary',
-                'placeholder': 'Time',
+                'placeholder': 'Time (hh:dd)',
             }),
 
             'duration': TextInput(attrs={
                 'class': 'input is-primary',
-                'placeholder': 'Duration',
+                'placeholder': 'Duration (mm:ss)',
             }),
         }

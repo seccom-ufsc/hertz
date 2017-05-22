@@ -20,15 +20,18 @@
     </div>
     {% endfor %}
 
-    <div class="box">
-        <p class="control">
-            <a class="button is-primary" href="{% url 'lecture_create' %}">
-                <span class="icon is-small">
-                    <i class="fa fa-plus"></i>
-                </span>
+    {% if user.is_authenticated %}
+        <div class="box">
+            <p class="control">
+                <a class="button is-primary" href="{% url 'lecture_create' %}">
+                    <span class="icon is-small">
+                        <i class="fa fa-plus"></i>
+                    </span>
 
-                <span>New Lecture</span>
-            </a>
-        </p>
-    </div>
+                    <span>New Lecture</span>
+                </a>
+            </p>
+        </div>
+    {% endif %}
+
 {% endblock %}
