@@ -45,6 +45,7 @@ class LectureForm(ModelForm):
             'time': TimeInput(attrs={
                 'class': 'input is-primary',
                 'placeholder': 'Time (hh:dd)',
+                'type': 'time',
             }),
 
             'duration': TextInput(attrs={

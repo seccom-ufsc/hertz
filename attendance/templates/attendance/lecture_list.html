@@ -3,7 +3,7 @@
 {% block content %}
     {% for lecture in object_list %}
     <div class="box">
-        <a href="{% url 'lecture' lecture.id %}">
+        <a href="{% url 'lecture_detail' lecture.id %}">
             <strong>{{ lecture.title }}</strong>
         </a>
 

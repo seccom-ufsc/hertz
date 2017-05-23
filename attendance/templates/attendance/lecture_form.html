@@ -2,6 +2,13 @@
 
 {% block content %}
     <div class="box">
+
+        {% if object %}
+            <h1 class="subtitle">Editing "{{ object.title }}"</h1>
+        {% else %}
+            <h1 class="subtitle">Creating new lecture</h1>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
 
@@ -21,9 +28,9 @@
                 <input class="button is-primary" type="submit" value="Submit" />
 
                 {% if object %}
-                    <a href="{% url 'lecture' object.id %}" class="button">Cancel</a>
+                    <a href="{% url 'lecture_detail' object.id %}" class="button">Cancel</a>
                 {% else %}
-                    <a href="{% url 'root' %}" class="button">Cancel</a>
+                    <a href="{% url 'lecture_list' %}" class="button">Cancel</a>
                 {% endif %}
             </p>
         </form>

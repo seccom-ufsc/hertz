@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
 
-<div class="box">
+<div class="box container">
 
-    <div class="hero is-large">Log in to Forum</h2>
+    <h1 class="subtitle">Log in to Hertz</h1>
 
     {% if form.errors %}
         <p style="color: red">Your username and password didn't match. Please try again.</p>
@@ -12,24 +14,18 @@
 
     <form method="post">
         {% csrf_token %}
-        {% for field in form %}
-            <p>
-                {{ field.label_tag }}
-                <br>
 
-                {{ field }}
-                <br>
+        {% for field in form%}
+            <p class="control">
+                {{ field.errors }}
 
-                {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                {% endfor %}
-
-                {% if field.help_text %}
-                    <p><small style="color: grey">{{ field.help_text }}</small></p>
-                {% endif %}
+                {% render_field field class="input is-primary" placeholder=field.label %}
             </p>
+
+            <br>
         {% endfor %}
-        <button type="submit">Log in</button>
+
+        <input class="button is-primary" type="submit" value="Submit" />
     </form>
 </div>
 

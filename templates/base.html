@@ -1,4 +1,5 @@
 {% load staticfiles %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +15,7 @@
 
     <body class"layout-default">
         <section class="hero is-large has-text-centered box">
-            <h1 class="title is-1"><a href="{% url 'root' %}">Hertz</a></h1>
+            <h1 class="title is-1"><a href="{% url 'lecture_list' %}">Hertz</a></h1>
 
             <div class="header-element">
             {% if user.is_authenticated %}
@@ -25,7 +26,6 @@
             </div>
 
         </section>
-
 
         <section class="container">
             {% block content %}

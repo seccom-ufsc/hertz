@@ -17,7 +17,6 @@ from .models import Lecture, Student
 class LecturesList(ListView):
     model = Lecture
     queryset = Lecture.objects.all()
-    template_name = 'attendance/root.html'
 
 
 class LectureDetail(DetailView):
@@ -36,9 +35,9 @@ class LectureDetail(DetailView):
 
 
 class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
-    template_name = 'attendance/lecture.html'
-    form_class = RegisterAttendanceForm
     model = Lecture
+    form_class = RegisterAttendanceForm
+    template_name = 'attendance/lecture.html'
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -49,7 +48,7 @@ class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
         return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('lecture', kwargs={'pk': self.object.pk})
+        return reverse('lecture_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         student_id = form.cleaned_data['student_id']
@@ -57,7 +56,7 @@ class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
         try:
             student = Student.objects.get(pk=student_id)
         except Student.DoesNotExist:
-            return redirect('lecture', self.object.id)
+            return redirect('lecture_detail', self.object.id)
 
         self.object.attendants.add(student)
 
@@ -79,7 +78,7 @@ class LectureCreate(LoginRequiredMixin, CreateView):
 
     form_class = LectureForm
 
-    success_url = reverse_lazy('root')
+    success_url = reverse_lazy('lecture_list')
 
 
 class LectureUpdate(LoginRequiredMixin, UpdateView):
@@ -89,7 +88,7 @@ class LectureUpdate(LoginRequiredMixin, UpdateView):
 
     slug_field = 'pk'
 
-    success_url = reverse_lazy('root')
+    success_url = reverse_lazy('lecture_list')
 
 
 class LectureDelete(LoginRequiredMixin, DeleteView):
@@ -97,4 +96,4 @@ class LectureDelete(LoginRequiredMixin, DeleteView):
 
     slug_field = 'pk'
 
-    success_url = reverse_lazy('root')
+    success_url = reverse_lazy('lecture_list')

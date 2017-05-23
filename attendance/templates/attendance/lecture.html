@@ -45,13 +45,13 @@
     </div>
 
     {% if students|length %}
-    <div class="box">
-        <div><strong>Students:</strong></div>
+        <div class="box">
+            <div><strong>Students:</strong></div>
 
-        {% for student in students %}
-            <div>{{ student.name }}</div>
-        {% endfor %}
-    </div>
+            {% for student in students %}
+                <div>{{ student.name }}</div>
+            {% endfor %}
+        </div>
     {% endif %}
 
 {% endblock %}
