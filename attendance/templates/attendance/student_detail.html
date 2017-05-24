@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="box">
+        <div>ID: <strong>{{ student.id }}</strong></div>
+        <div>Name: <strong>{{ student.name }}</strong></div>
+    </div>
+
+
+    {% if lectures|length %}
+        <div class="box">
+            <div><strong>Lectures ({{lectures|length}}):</strong></div>
+
+            {% for lecture in lectures %}
+                <div>
+                    <span>
+                        <a href="{% url 'lecture_detail' lecture.id %}">
+                            {{ lecture.title }}</a> - {{ lecture.lecturer }}
+
+                        <div class="icon">
+                            <a href="{% url 'student_attendance_remove' student.id lecture.id %}">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </div>
+                    </span>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -75,25 +75,47 @@ class LectureDetailMux(View):
 
 class LectureCreate(LoginRequiredMixin, CreateView):
     model = Lecture
-
     form_class = LectureForm
-
     success_url = reverse_lazy('lecture_list')
 
 
 class LectureUpdate(LoginRequiredMixin, UpdateView):
     model = Lecture
-
     form_class = LectureForm
-
     slug_field = 'pk'
-
     success_url = reverse_lazy('lecture_list')
 
 
 class LectureDelete(LoginRequiredMixin, DeleteView):
     model = Lecture
-
     slug_field = 'pk'
-
     success_url = reverse_lazy('lecture_list')
+
+
+class StudentDetail(LoginRequiredMixin, DetailView):
+    model = Student
+    slug_field = 'pk'
+    context_object_name = 'student'
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'lectures': self.object.lectures.all(),
+        }
+
+        return super().get_context_data(**context)
+
+
+class StudentList(ListView):
+    model = Student
+    queryset = Student.objects.all()
+
+
+@login_required
+def remove_attendance(request, student_pk, lecture_pk):
+    student = get_object_or_404(Student, pk=int(student_pk))
+    lecture = get_object_or_404(Lecture, pk=int(lecture_pk))
+
+    lecture.attendants.remove(student)
+
+    return redirect('student_detail', student.id)
+

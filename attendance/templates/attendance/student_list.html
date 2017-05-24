@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="box">
+        {% for student in object_list %}
+            <p>
+                <a href="{% url 'student_detail' student.id %}">
+                    <strong>{{ student.id }} - {{ student.name }}</strong>
+                </a>
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

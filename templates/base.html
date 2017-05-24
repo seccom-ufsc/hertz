@@ -19,11 +19,19 @@
             <h1 class="title is-1"><a href="{% url 'lecture_list' %}">Hertz</a></h1>
 
             <div class="header-element">
-            {% if user.is_authenticated %}
-                <h1><a href="{% url 'logout' %}">Logout</a></h1>
-            {% else %}
-                <h1><a href="{% url 'login' %}">Login</a></h1>
-            {% endif %}
+                <h1><a href="{% url 'lecture_list' %}">Lectures</a></h1>
+            </div>
+
+            <div class="header-element">
+                <h1><a href="{% url 'student_list' %}">Students</a></h1>
+            </div>
+
+            <div class="header-element">
+                {% if user.is_authenticated %}
+                    <h1><a href="{% url 'logout' %}">Logout</a></h1>
+                {% else %}
+                    <h1><a href="{% url 'login' %}">Login</a></h1>
+                {% endif %}
             </div>
 
         </section>
