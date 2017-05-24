@@ -11,48 +11,39 @@ from django.contrib.auth.models import User
 from attendance.models import Lecture, Student
 from datetime import date, time, timedelta
 
-User.objects.create_superuser('admin', '', 'adminadmin')
+from faker import Factory
 
-lectures = [
-    {
-        'title': 'Big data ou Big Brother',
-        'lecturer': 'Castlevânia',
-        'date': date(2016, 10, 5),
-        'time': time(15, 10),
-        'duration': timedelta(seconds=45 * 60),
-    },
-    {
-        'title': 'Foca Robô',
-        'lecturer': 'Professor 1',
-        'date': date(2016, 10, 5),
-        'time': time(16, 00),
-        'duration': timedelta(seconds=60 * 60),
-    },
-    {
-        'title': 'A Terra é Plana',
-        'lecturer': 'Professor 2',
-        'date': date(2016, 10, 6),
-        'time': time(11, 00),
-        'duration': timedelta(seconds=30 * 60),
-    }
-]
+import random
+
+try:
+    User.objects.create_superuser('admin', '', 'adminadmin')
+except Exception as e:
+    print(e)
+
+fake = Factory.create('pt_BR')
 
 
-students = [
-    {
-        'name': 'Student 1'
-    },
-    {
-        'name': 'Student 2'
-    },
-    {
-        'name': 'Student 3'
-    },
+def fake_name():
+    return f'{fake.first_name()} {fake.last_name()}'
 
-]
+for _ in range(10):
+    lecture = Lecture(
+        title=fake.sentence(nb_words=6, variable_nb_words=True),
+        lecturer=fake_name(),
+        date=fake.date_object(),
+        time=fake.time_object(),
+        duration=timedelta(seconds=60 * random.randint(30, 60)),
+    )
 
-for lecture in lectures:
-    Lecture(**lecture).save()
+    print(lecture)
 
-for student in students:
-    Student(**student).save()
+    lecture.save()
+
+for _ in range(10):
+    student = Student(
+        name=fake_name()
+    )
+
+    print(student)
+
+    student.save()

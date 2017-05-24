@@ -19,7 +19,7 @@ class LecturesList(ListView):
     queryset = Lecture.objects.all()
 
 
-class LectureDetail(DetailView):
+class LectureDetail(LoginRequiredMixin, DetailView):
     model = Lecture
     slug_field = 'pk'
     context_object_name = 'lecture'
@@ -40,10 +40,9 @@ class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
     template_name = 'attendance/lecture.html'
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return HttpResponseForbidden()
-
         self.object = self.get_object()
+
+        print(f'printei: {self.object}')
 
         return super().post(request, *args, **kwargs)
 
@@ -53,14 +52,15 @@ class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
     def form_valid(self, form):
         student_id = form.cleaned_data['student_id']
 
-        try:
-            student = Student.objects.get(pk=student_id)
-        except Student.DoesNotExist:
-            return redirect('lecture_detail', self.object.id)
+        student = get_object_or_404(Student, pk=student_id)
 
         self.object.attendants.add(student)
 
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            students=self.object.attendants.all())
 
 
 class LectureDetailMux(View):

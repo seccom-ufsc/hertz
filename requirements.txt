@@ -1,4 +1,5 @@
-Django==1.11.1
-gunicorn
 django-widget-tweaks
+Django==1.11.1
+faker
+gunicorn
 psycopg2

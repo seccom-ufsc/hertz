@@ -2,11 +2,22 @@ from datetime import date
 
 from django.forms import *
 
-from .models import Lecture
+from .models import Lecture, Student
+
+
+def validate_student_exists(pk):
+        try:
+            student = Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            raise ValidationError(
+                'There is no student with this ID',
+            )
 
 
 class RegisterAttendanceForm(Form):
-    student_id = IntegerField(label='Student ID')
+    student_id = IntegerField(
+        label='Student ID', validators=[validate_student_exists])
+
     student_id.widget.attrs.update({
         'class': 'input is-primary',
         'placeholder': 'Student ID',

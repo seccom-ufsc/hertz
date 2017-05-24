@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
     <div class="box">
         <div>Title: <strong>{{ lecture.title }}</strong></div>
@@ -21,35 +23,30 @@
         <form method="post">
             {% csrf_token %}
 
-            {% if form.errors %}
-                <p style="color: red">Erro!</p>
+            {% if form.student_id.errors %}
+                <p style="color: red">{{ form.student_id.errors.0 }}</p>
             {% endif %}
 
-
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <div>{{ error }}</div>
-                {% endfor %}
+            <div class="field has-addons">
+                <p class="control">
+                    {{ form.student_id|attr:"autofocus" }}
+                </p>
 
                 <p class="control">
-                    {{ field }}
+                    <input class="button is-primary" type="submit" value="Submit" />
                 </p>
-            {% endfor %}
+            </div>
 
-            <br>
-
-            <p class="control">
-                <input class="button is-primary" type="submit" value="Submit" />
-            </p>
         </form>
     </div>
 
+
     {% if students|length %}
         <div class="box">
-            <div><strong>Students:</strong></div>
+            <div><strong>Students ({{students|length}}):</strong></div>
 
             {% for student in students %}
-                <div>{{ student.name }}</div>
+                <div>{{ student.id }} - {{ student.name }}</div>
             {% endfor %}
         </div>
     {% endif %}

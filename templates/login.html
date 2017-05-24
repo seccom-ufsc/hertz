@@ -19,7 +19,12 @@
             <p class="control">
                 {{ field.errors }}
 
-                {% render_field field class="input is-primary" placeholder=field.label %}
+                {% if form.errors %}
+                    {% render_field field class="input is-danger" placeholder=field.label %}
+                {% else %}
+                    {% render_field field class="input is-primary" placeholder=field.label %}
+                {% endif %}
+
             </p>
 
             <br>
