@@ -36,7 +36,7 @@ for _ in range(10):
 
     lecture.save()
 
-for line in open('seccom2016-estudante.csv'):
+for line in open('presencas-seccom2016/seccom2016-estudante.csv'):
     registration, name = line.strip().split(',')
 
     student = Student(
