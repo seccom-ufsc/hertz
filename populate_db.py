@@ -23,13 +23,10 @@ except Exception as e:
 fake = Factory.create('pt_BR')
 
 
-def fake_name():
-    return f'{fake.first_name()} {fake.last_name()}'
-
 for _ in range(10):
     lecture = Lecture(
         title=fake.sentence(nb_words=6, variable_nb_words=True),
-        lecturer=fake_name(),
+        lecturer=f'{fake.first_name()} {fake.last_name()}',
         date=fake.date_object(),
         time=fake.time_object(),
         duration=timedelta(seconds=60 * random.randint(30, 60)),
@@ -39,11 +36,15 @@ for _ in range(10):
 
     lecture.save()
 
-for _ in range(10):
+for line in open('seccom2016-estudante.csv'):
+    registration, name = line.strip().split(',')
+
     student = Student(
-        name=fake_name()
+        registration=registration.zfill(8),
+        name=name.strip('"'),
     )
+
+    student.save()
 
     print(student)
 
-    student.save()

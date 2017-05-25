@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="box">
-        <div>ID: <strong>{{ student.id }}</strong></div>
+        <div>Registration: <strong>{{ student.registration }}</strong></div>
         <div>Name: <strong>{{ student.name }}</strong></div>
     </div>
 
@@ -20,7 +20,7 @@
                             {{ lecture.title }}</a> - {{ lecture.lecturer }}
 
                         <div class="icon">
-                            <a href="{% url 'student_attendance_remove' student.id lecture.id %}">
+                            <a href="{% url 'student_attendance_remove' student.registration lecture.id %}">
                                 <i class="fa fa-remove"></i>
                             </a>
                         </div>

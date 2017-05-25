@@ -23,13 +23,13 @@
         <form method="post">
             {% csrf_token %}
 
-            {% if form.student_id.errors %}
-                <p style="color: red">{{ form.student_id.errors.0 }}</p>
+            {% if form.student_registration.errors %}
+                <p style="color: red">{{ form.student_registration.errors.0 }}</p>
             {% endif %}
 
             <div class="field has-addons">
                 <p class="control">
-                    {{ form.student_id|attr:"autofocus" }}
+                    {{ form.student_registration|attr:"autofocus" }}
                 </p>
 
                 <p class="control">
@@ -46,7 +46,7 @@
             <div><strong>Students ({{students|length}}):</strong></div>
 
             {% for student in students %}
-                <p><a href="{% url 'student_detail' student.id %}">{{ student.id }} - {{ student.name }}</a></p>
+                <p><a href="{% url 'student_detail' student.registration %}">{{ student.registration }}</a> - {{ student.name }}</p>
             {% endfor %}
         </div>
     {% endif %}

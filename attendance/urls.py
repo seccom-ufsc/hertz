@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^student/(\d+)/remove/(\d+)$', remove_attendance,
         name='student_attendance_remove'),
 
-    url(r'^student/(?P<pk>\d+)$', StudentDetail.as_view(),
+    url(r'^student/(?P<registration>\d+)$', StudentDetail.as_view(),
         name='student_detail'),
 
     url(r'^student/$', StudentList.as_view(),

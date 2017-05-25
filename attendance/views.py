@@ -42,17 +42,15 @@ class RegisterAttendance(LoginRequiredMixin, SingleObjectMixin, FormView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        print(f'printei: {self.object}')
-
         return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('lecture_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        student_id = form.cleaned_data['student_id']
+        student_registration = form.cleaned_data['student_registration']
 
-        student = get_object_or_404(Student, pk=student_id)
+        student = get_object_or_404(Student, registration=student_registration)
 
         self.object.attendants.add(student)
 
@@ -94,8 +92,11 @@ class LectureDelete(LoginRequiredMixin, DeleteView):
 
 class StudentDetail(LoginRequiredMixin, DetailView):
     model = Student
-    slug_field = 'pk'
     context_object_name = 'student'
+
+    def get_object(self):
+        return get_object_or_404(
+            Student, registration=self.kwargs.get('registration'))
 
     def get_context_data(self, **kwargs):
         context = {
@@ -111,11 +112,11 @@ class StudentList(ListView):
 
 
 @login_required
-def remove_attendance(request, student_pk, lecture_pk):
-    student = get_object_or_404(Student, pk=int(student_pk))
+def remove_attendance(request, student_registration, lecture_pk):
+    student = get_object_or_404(Student, registration=student_registration)
     lecture = get_object_or_404(Lecture, pk=int(lecture_pk))
 
     lecture.attendants.remove(student)
 
-    return redirect('student_detail', student.id)
+    return redirect('student_detail', student_registration)
 

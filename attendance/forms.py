@@ -5,9 +5,9 @@ from django.forms import *
 from .models import Lecture, Student
 
 
-def validate_student_exists(pk):
+def validate_student_exists(registration):
         try:
-            student = Student.objects.get(pk=pk)
+            student = Student.objects.get(registration=registration)
         except Student.DoesNotExist:
             raise ValidationError(
                 'There is no student with this ID',
@@ -15,12 +15,14 @@ def validate_student_exists(pk):
 
 
 class RegisterAttendanceForm(Form):
-    student_id = IntegerField(
-        label='Student ID', validators=[validate_student_exists])
+    student_registration = CharField(
+        max_length=8, min_length=8,
+        label='Registration', validators=[validate_student_exists])
 
-    student_id.widget.attrs.update({
+    student_registration.widget.attrs.update({
         'class': 'input is-primary',
-        'placeholder': 'Student ID',
+        'placeholder': 'Registration',
+        # 'size':5, 'maxlength':5
     })
 
 

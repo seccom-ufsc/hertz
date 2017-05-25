@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Student(models.Model):
+    registration = models.CharField(max_length=8, unique=True, db_index=True)
     name = models.CharField(max_length=200)
 
     def __str__(self):
