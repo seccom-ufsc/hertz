@@ -10,36 +10,39 @@
         <div>Time: <strong>{{ lecture.time }}</strong></div>
         <div>Duration: <strong>{{ lecture.duration }}</strong></div>
 
-        <div class="icon">
-            <a href="{% url 'lecture_edit' lecture.id %}"><i class="fa fa-pencil"></i></a>
-        </div>
-
-        <div class="icon">
-            <a href="{% url 'lecture_delete' lecture.id %}"><i class="fa fa-remove"></i></a>
-        </div>
-    </div>
-
-    <div class="box">
-        <form method="post">
-            {% csrf_token %}
-
-            {% if form.student_registration.errors %}
-                <p style="color: red">{{ form.student_registration.errors.0 }}</p>
-            {% endif %}
-
-            <div class="field has-addons">
-                <p class="control">
-                    {{ form.student_registration|attr:"autofocus" }}
-                </p>
-
-                <p class="control">
-                    <input class="button is-primary" type="submit" value="Submit" />
-                </p>
+        {% if user.is_authenticated %}
+            <div class="icon">
+                <a href="{% url 'lecture_edit' lecture.id %}"><i class="fa fa-pencil"></i></a>
             </div>
 
-        </form>
+            <div class="icon">
+                <a href="{% url 'lecture_delete' lecture.id %}"><i class="fa fa-remove"></i></a>
+            </div>
+        {% endif %}
     </div>
 
+    {% if user.is_authenticated %}
+        <div class="box">
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.student_registration.errors %}
+                    <p style="color: red">{{ form.student_registration.errors.0 }}</p>
+                {% endif %}
+
+                <div class="field has-addons">
+                    <p class="control">
+                        {{ form.student_registration|attr:"autofocus" }}
+                    </p>
+
+                    <p class="control">
+                        <input class="button is-primary" type="submit" value="Submit" />
+                    </p>
+                </div>
+
+            </form>
+        </div>
+    {% endif %}
 
     {% if students|length %}
         <div class="box">

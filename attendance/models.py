@@ -6,8 +6,8 @@ class Student(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
-        return '<{}: id={}, name={}>'.format(
-            self.__class__.__name__, self.id, self.name)
+        return '<{}: registration={}, name={}>'.format(
+            self.__class__.__name__, self.registration, self.name)
 
 
 class Lecture(models.Model):

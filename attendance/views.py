@@ -19,7 +19,7 @@ class LecturesList(ListView):
     queryset = Lecture.objects.all()
 
 
-class LectureDetail(LoginRequiredMixin, DetailView):
+class LectureDetail(DetailView):
     model = Lecture
     slug_field = 'pk'
     context_object_name = 'lecture'

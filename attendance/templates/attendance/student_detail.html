@@ -17,7 +17,7 @@
                 <div>
                     <span>
                         <a href="{% url 'lecture_detail' lecture.id %}">
-                            {{ lecture.title }}</a> - {{ lecture.lecturer }}
+                            {{ lecture.title }}</a> - {{ lecture.lecturer }} - {{ lecture.date }} - {{ lecture.time }}
 
                         <div class="icon">
                             <a href="{% url 'student_attendance_remove' student.registration lecture.id %}">
