@@ -5,9 +5,12 @@ class Student(models.Model):
     registration = models.CharField(max_length=8, unique=True, db_index=True)
     name = models.CharField(max_length=200)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
-        return '<{}: registration={}, name={}>'.format(
-            self.__class__.__name__, self.registration, self.name)
+        cls = self.__class__.__name__
+        return f'<{cls}: registration={self.registration}, name={self.name}>'
 
 
 class Lecture(models.Model):
@@ -24,5 +27,5 @@ class Lecture(models.Model):
         ordering = ('date', 'time')
 
     def __str__(self):
-        return '<{}: id={}, title={}>'.format(
-            self.__class__.__name__, self.id, self.title)
+        cls = self.__class__.__name__
+        return f'<{cls}: id={self.id}, title={self.title}>'
