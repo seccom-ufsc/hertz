@@ -17,7 +17,7 @@ cd hertz/
 docker-compose up -d
 ```
 
-4. If you are running Hertz for the first time, you need to create an admin account
+4. If you are running Hertz for the first time, you need to import the student's data (and create an admin account)
 ```bash
-docker-compose run web python manage.py createsuperuser
+docker-compose run web python db_populate.py students_data.csv
 ```
